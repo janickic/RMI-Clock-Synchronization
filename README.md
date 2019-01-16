@@ -5,11 +5,6 @@ Compile java code
 javac *.java
 ```
 
-Start rmi register on server
-```
-rmiregister &
-```
-
 Start server code
 ```
 java Server
