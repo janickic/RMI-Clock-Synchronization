@@ -20,13 +20,17 @@ public class Client {
 			SystemTime stub = (SystemTime) registry.lookup("SystemTime");
 
 			// Get current time before calling the server to calculate RTT
-			long now = Instant.now().toEpochMilli();
+			long start = Instant.now().toEpochMilli();
 
 			// Calling the remote method using the obtained object 
-			long serverTime = stub.getSystemTime(); 
+			long serverTime = stub.getSystemTime();
+
+			long end = Instant.now().toEpochMilli(); 
+			//System.out.println("ServerTime "+ serverTime);
 
 			// Calulate RTT
-			long rtt = (serverTime-now)/2;
+			long rtt = (end-start)/2;
+			//System.out.println("rtt "+ rtt);
 
 			// Calcuate clientTime to set the client clock with RTT delay
 			long clientTime = serverTime+rtt;
