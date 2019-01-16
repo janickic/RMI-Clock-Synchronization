@@ -17,7 +17,7 @@ public class Client {
 			Registry registry = LocateRegistry.getRegistry(serverHost); 
 
 			// Looking up the registry for the remote object 
-			SystemTime stub = (SystemTime) registry.lookup("SystemTime"); 
+			SystemTime stub = (SystemTime) registry.lookup("SystemTime");
 
 			// Get current time before calling the server to calculate RTT
 			long now = Instant.now().toEpochMilli();
