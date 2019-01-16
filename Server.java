@@ -13,6 +13,7 @@ public class Server extends DefaultSystemTime {
    public Server() {} 
    public static void main(String args[]) {  
 
+      // Getting IPV4 address
       String ip = null;
       try {
          Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
@@ -36,14 +37,14 @@ public class Server extends DefaultSystemTime {
 
       System.setProperty("java.rmi.server.hostname", ip);
 
-      // Looking up rmi registry
+      // Creating rmi registry
       try {
          LocateRegistry.createRegistry(1099);
       } catch (Exception e) {
          System.err.println("Failed to create registry: " + e.toString()); 
          e.printStackTrace(); 
       }
-      String tmp = "//localhost:1099/SystemTime";
+      String objPath = "//localhost:1099/SystemTime";
 
       try { 
          // Instantiating the implementation class 
@@ -54,7 +55,7 @@ public class Server extends DefaultSystemTime {
          SystemTime stub = (SystemTime) UnicastRemoteObject.exportObject(obj, 0);  
          
          // Binding the remote object (stub) in the registry 
-         Naming.bind(tmp, obj);  
+         Naming.bind(objPath, obj);  
 
          System.err.println("Server ready"); 
       } catch (Exception e) { 
