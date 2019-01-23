@@ -16,7 +16,7 @@ public class Client {
 		System.out.println("serverHost "+ serverHost);
 		try {  
 			// Getting the registry 
-			Clock clock = Clock.systemUTC();
+			Clock clientClock = Clock.systemUTC();
 			Registry registry = LocateRegistry.getRegistry(serverHost); 
 
 			// Looking up the registry for the remote object 
@@ -35,13 +35,13 @@ public class Client {
 			long rtt = (end-start)/2;
 			// System.out.println("rtt "+ rtt);
 
-			// Calcuate clientTime to set the client clock with RTT delay
-			long clientTime = serverTime+rtt;
-			// System.out.println("serverTime + rtt "+ clientTime);
-			Duration diff = Duration.ofMillis(clientTime - clock.instant().toEpochMilli());
-			// System.out.println("Old ClientTime "+ clock.instant().toEpochMilli());
-			clock = clock.offset(clock, diff);
-			System.out.println("New ClientTime "+ clock.instant().toEpochMilli());
+			// Calcuate updatedTime to set the client clock with RTT delay
+			long updatedTime = serverTime+rtt;
+			// System.out.println("serverTime + rtt "+ updatedTime);
+			Duration diff = Duration.ofMillis(updatedTime - clientClock.instant().toEpochMilli());
+			// System.out.println("Old ClientTime "+ clientClock.instant().toEpochMilli());
+			clientClock = clientClock.offset(clientClock, diff);
+			System.out.println("New Client Time "+ clientClock.instant().toEpochMilli());
 
 			// Set Client clock
 			
