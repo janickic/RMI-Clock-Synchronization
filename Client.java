@@ -35,11 +35,13 @@ public class Client {
 
 			// Calcuate updatedTime to set the client clock with RTT delay
 			long updatedTime = serverTime+rtt;
+			
+			// Calculate offset
 			Duration diff = Duration.ofMillis(updatedTime - clientClock.instant().toEpochMilli());
+			
+			// Set Client clock based on offset to server time
 			clientClock = clientClock.offset(clientClock, diff);
 			System.out.println("New Client Time "+ clientClock.instant().toEpochMilli());
-
-			// Set Client clock
 			
 		} catch (Exception e) {
 			System.err.println("Client exception: " + e.toString()); 
