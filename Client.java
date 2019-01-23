@@ -29,17 +29,13 @@ public class Client {
 			long serverTime = stub.getSystemTime();
 
 			long end = Instant.now().toEpochMilli(); 
-			// System.out.println("ServerTime "+ serverTime);
 
 			// Calulate RTT
 			long rtt = (end-start)/2;
-			// System.out.println("rtt "+ rtt);
 
 			// Calcuate updatedTime to set the client clock with RTT delay
 			long updatedTime = serverTime+rtt;
-			// System.out.println("serverTime + rtt "+ updatedTime);
 			Duration diff = Duration.ofMillis(updatedTime - clientClock.instant().toEpochMilli());
-			// System.out.println("Old ClientTime "+ clientClock.instant().toEpochMilli());
 			clientClock = clientClock.offset(clientClock, diff);
 			System.out.println("New Client Time "+ clientClock.instant().toEpochMilli());
 
