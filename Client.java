@@ -13,7 +13,7 @@ public class Client {
 		}
 		String serverHost = args[0];
 
-		System.out.println("serverHost "+ serverHost);
+		System.out.println("Server Host "+ serverHost);
 		try {  
 			// Getting the registry 
 			Clock clientClock = Clock.systemUTC();
@@ -27,11 +27,13 @@ public class Client {
 
 			// Calling the remote method using the obtained object 
 			long serverTime = stub.getSystemTime();
+			System.out.println("Server time "+ serverTime);
 
 			long end = Instant.now().toEpochMilli(); 
 
 			// Calulate RTT
 			long rtt = (end-start)/2;
+			System.out.println("RTT "+ rtt);
 
 			// Calcuate updatedTime to set the client clock with RTT delay
 			long updatedTime = serverTime+rtt;
@@ -41,7 +43,7 @@ public class Client {
 			
 			// Set Client clock based on offset to server time
 			clientClock = clientClock.offset(clientClock, diff);
-			System.out.println("New Client Time "+ clientClock.instant().toEpochMilli());
+			System.out.println("\nNew Client Time "+ clientClock.instant().toEpochMilli());
 			
 		} catch (Exception e) {
 			System.err.println("Client exception: " + e.toString()); 
